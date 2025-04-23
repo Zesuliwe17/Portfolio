@@ -53,10 +53,7 @@
       border-radius: 5px;
     }
     .download-btn:hover {
-  background-color: #1a242f;
-  color: #ecf0f1;
-}
-
+      background-color: #1a242f;
     }
     .project-card {
       display: inline-block;
@@ -152,57 +149,63 @@
       <p><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/zesuliwe-sinyamba-68a26b246" target="_blank">https://www.linkedin.com/in/zesuliwe-sinyamba-68a26b246</a></p>
     </div>
 
-    <!-- Download CV Section -->
-    <div class="section">
-      <button class="download-btn" onclick="downloadCV()">Download CV</button>
-    </div>
+   <!-- Download CV Section -->
+<div class="section">
+  <button class="download-btn" onclick="downloadCV()">Download CV</button>
+</div>
 
-  </div>
-
-  <script>
-    function downloadCV() {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(success, error);
-      } else {
-        alert("Geolocation is not supported by your browser.");
-        triggerDownload();
-      }
-
-      function success(position) {
-        const lat = position.coords.latitude;
-        const lon = position.coords.longitude;
-        const apiKey = "05424b9c564b8c72009da6db1b4aee38";
-
-        fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`)
-          .then(response => response.json())
-          .then(data => {
-            const city = data.name;
-            const temp = data.main.temp;
-            const weather = data.weather[0].description;
-            alert(`Your Location: ${city}\nWeather: ${weather}, ${temp}°C`);
-            triggerDownload();
-          })
-          .catch(() => {
-            alert("Could not get weather data.");
-            triggerDownload();
-          });
-      }
-
-      function error() {
-        alert("Location access denied.");
-        triggerDownload();
-      }
-
-      function triggerDownload() {
-        const link = document.createElement('a');
-        link.href = "https://res.cloudinary.com/dubnqb6d7/image/upload/v1745325073/ZN_SINYAMBA_CV_ICT_vpmz3s.pdf"; 
-        link.download = "Zhttps://res.cloudinary.com/dubnqb6d7/image/upload/v1745325073/ZN_SINYAMBA_CV_ICT_vpmz3s.pdf";
-        document.body.appendChild(lhttps://res.cloudinary.com/dubnqb6d7/image/upload/v1745325073/ZN_SINYAMBA_CV_ICT_vpmz3s.pdf);
-        link.click();
-        document.body.removeChild(https://res.cloudinary.com/dubnqb6d7/image/upload/v1745325073/ZN_SINYAMBA_CV_ICT_vpmz3s.pdf);
-      }
+<script>
+  function downloadCV() {
+    if (navigator.geolocation) {
+      // Try to get the user's location
+      navigator.geolocation.getCurrentPosition(success, error);
+    } else {
+      alert("Geolocation is not supported by your browser.");
+      triggerDownload();  // If geolocation fails, proceed with download
     }
-  </script>
 
-</body>
-</html>
+    // Success function to get weather data based on location
+    function success(position) {
+      const lat = position.coords.latitude;
+      const lon = position.coords.longitude;
+      const apiKey = "05424b9c564b8c72009da6db1b4aee38";
+
+      // Fetch weather data from OpenWeather API
+      fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`)
+        .then(response => response.json())
+        .then(data => {
+          const city = data.name;
+          const temp = data.main.temp;
+          const weather = data.weather[0].description;
+
+          // Display the location and weather information
+          alert(`Your Location: ${city}\nWeather: ${weather}, ${temp}°C`);
+
+          // After showing weather, trigger download
+          triggerDownload();
+        })
+        .catch(() => {
+          alert("Could not get weather data.");
+          triggerDownload();  // Proceed to download if weather fetch fails
+        });
+    }
+
+    //if location access is denied
+    function error() {
+      alert("Location access denied.");
+      triggerDownload();  // Proceed to download if location access is denied
+    }
+
+    // Function to trigger the CV download
+    function triggerDownload() {
+      const link = document.createElement('a');
+      link.href = "https://drive.google.com/uc?export=download&id=1ryNUqlkVHti70k-Ryj3itqSHDnsByb59"; // The direct download link
+      link.download = "ZN_SINYAMBA_CV_ICT.pdf"; // Filename for download
+
+     
+      document.body.appendChild(link);
+      link.click(); // Simulate the click event to trigger the download
+      document.body.removeChild(link); // Remove the link after download starts
+    }
+  }
+</script>
